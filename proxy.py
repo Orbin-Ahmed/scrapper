@@ -1,27 +1,22 @@
-import requests
 import random
+import json
 
-def get_random_proxy():
-    url = "https://proxylist.geonode.com/api/proxy-list"
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
-    }
+def get_proxies_from_file(file_path):
     try:
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            proxies = data["data"]
-            random_proxy = random.choice(proxies)
-            ip = random_proxy["ip"]
-            port = random_proxy["port"]
-            protocol = random_proxy["protocols"][0]
-            return {protocol: f"{protocol}://{ip}:{port}"}
-        else:
-            print("Failed to fetch proxies. Status code:", response.status_code)
-            return None
+        with open(file_path, 'r', encoding='utf-8') as file:
+            proxies = json.load(file)  # Directly load the list of proxies
+            return proxies
     except Exception as e:
-        print("An error occurred while fetching proxies:", e)
-        return None
+        print("An error occurred while reading the file:", e)
+        return []
 
-p = get_random_proxy();
-print(p)
+def get_random_proxy(file_path):
+    proxies = get_proxies_from_file(file_path)
+    if not proxies:
+        print("No proxies found in the file.")
+        return None
+    random_proxy = random.choice(proxies)
+    ip = random_proxy["ip"]
+    port = random_proxy["port"]
+    protocol = random_proxy["protocols"][0]
+    return {protocol: f"{protocol}://{ip}:{port}"}

@@ -4,6 +4,7 @@ import cv2
 
 from requests import get
 from bs4 import BeautifulSoup as soup
+from concurrent.futures import ThreadPoolExecutor
 
 from pydotmap import DotMap
 
