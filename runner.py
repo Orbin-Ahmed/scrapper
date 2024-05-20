@@ -27,4 +27,5 @@ if data["url_list"]:
     # DownloadObject.download(data["url_list"], threads, output_folder)
     # print(f"Downloaded images to '{output_folder}'.")
 else:
+    print(f"Found {len(data['url_list'])} image URLs for '{keyword}'.")
     print(f"No images found for '{keyword}'.")

@@ -4,7 +4,7 @@ import json
 def get_proxies_from_file(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
-            proxies = json.load(file)  # Directly load the list of proxies
+            proxies = json.load(file)
             return proxies
     except Exception as e:
         print("An error occurred while reading the file:", e)
